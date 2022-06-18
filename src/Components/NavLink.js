@@ -1,9 +1,10 @@
 import React from 'react'
 
-const NavLink = () => {
+const NavLink = ({linkName,children}) => {
   return (
     <div className='nav-link' >
-        <a href="http://" target="_blank" rel="noopener noreferrer">Nav Link</a>
+        <a href="http://" target="_blank" rel="noopener noreferrer">{linkName}</a>
+        {children}
     </div>
   )
 }

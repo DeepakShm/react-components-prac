@@ -1,19 +1,39 @@
-import React from 'react';
-import Logo from '../Components/Logo';
+import {React} from 'react';
 import NavLink from '../Components/NavLink';
-import Search from '../Components/Search';
+import { BiCart } from 'react-icons/bi';
 
-const Header = () => {
+
+const Header = ({cartTotal}) => {
+
+  const navLinks = ["Home","Shop","Portfolio","Blog","Elements"];
+  const navBtns = ["Log in","Sign up"];
+
+  // const {cartTotal} = useContext(CartContext);
+
   return (
     <header className='header'>
         <div>
-            <Logo />
+          <div className='logo' >
+            <h4>Axeno</h4>
+          </div>
         </div>
         <div className='nav'>
-            <NavLink />
-            <NavLink />
-            <NavLink />
-            <Search />
+          {
+            navLinks.map((nl)=>{
+              return <NavLink linkName={nl} />
+            })
+          }
+        </div>
+        <div className='nav nav-btn'>
+          {
+            navBtns.map((nl)=>{
+              return <NavLink linkName={nl} />
+            })
+          }
+          <div className='cart'>
+            <BiCart size='20px'/>
+            <span className='cart-count' >{cartTotal}</span>
+          </div>
         </div>
     </header>
   )
