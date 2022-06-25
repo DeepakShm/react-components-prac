@@ -1,26 +1,33 @@
 import { useState } from 'react';
+import CartContext from './Context/CartContext';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import Banner from './Layout/Banner';
-import BelowCTA from './Layout/BelowCTA';
-import FeatureList from './Layout/FeatureList';
 import { Footer } from './Layout/Footer';
 import Header from './Layout/Header';
+import { Home } from './Pages/Home';
+import { Shop } from './Pages/Shop';
+import { Product } from './Pages/Product';
+import { MyCart } from './Pages/MyCart';
 
 function App() {
 
-  const [cartTotal, setCartTotal] = useState(0);
+  const [cartTotal,setCartTotal] = useState([]);
 
   return (
-    
     <div className="App">
-        <Header cartTotal={cartTotal} />
-        <Banner />
-        <FeatureList />
-        <BelowCTA setCartTotal={setCartTotal} />
-        <Footer />
+      <CartContext.Provider value={{cartTotal,setCartTotal}} >
+        <BrowserRouter>
+          <Header/>
+          <Routes>
+            <Route path='/' element={ <Home  /> } />
+            <Route path='/shop' element={<Shop/>} />
+            <Route path='/cart' element={<MyCart/>} />
+            <Route path='/shop/:id' element={<Product />} />
+          </Routes>
+          <Footer />
+        </BrowserRouter>
+      </CartContext.Provider>
     </div>
-    
-    
   );
 }
 

@@ -15,7 +15,7 @@ const FeatureList = () => {
   return (
     <div className='card-list'>
       {
-        featureList.map((fl)=><Feature name={fl.name} desc={fl.desc} icon={fl.icon}  />)
+        featureList.map((fl)=><Feature name={fl.name} desc={fl.desc} icon={fl.icon} key={fl.name} />)
       }
     </div>
   )
