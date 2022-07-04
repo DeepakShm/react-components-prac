@@ -2,21 +2,20 @@ import React from 'react';
 import ALink from '../Components/ALink';
 import { BiCart } from 'react-icons/bi';
 import {Link} from 'react-router-dom';
-import { useContext } from 'react';
-import CartContext from '../Context/CartContext';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
 
   const navLinks = ["Shop","Log in","Sign up"];
-  const {cartTotal} = useContext(CartContext);
+  const cart = useSelector((state)=>state.cart.value);
+
 
   const getCartTotal=()=>{
-    console.log(cartTotal);
-    if(cartTotal.length==0)
+    if(cart.length===0)
       return 0;
 
     let totalItems = 0;
-    cartTotal.forEach(ct => {
+    cart.forEach(ct => {
       totalItems += ct.quantity;
     });
     return totalItems;

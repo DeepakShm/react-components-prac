@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios';
 import ProductList from '../Layout/ProductList';
+import { showToast } from '../App';
 
 export const Category = () => {
 
@@ -13,7 +14,7 @@ export const Category = () => {
             const data = (await axios.get(`https://api.escuelajs.co/api/v1/categories`)).data;
             setCategories(data);
           } catch (error) {
-            console.log(error.message); 
+            showToast(error.message); 
           }
     }
 

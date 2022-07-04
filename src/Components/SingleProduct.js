@@ -1,42 +1,49 @@
-import React from 'react'
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState,useEffect } from 'react';
 import {useParams} from 'react-router-dom';
 import axios from 'axios';
 import { Loading } from './Loading';
-import { useContext } from 'react';
-import CartContext from '../Context/CartContext';
+import { addToCart, removeFromCart, removeProduct } from '../Store/Slices/cartSlice';
+import { useDispatch, useSelector } from 'react-redux/es/exports';
+import { showToast } from '../App';
+
 
 export const SingleProduct = () => {
-
     const {id} = useParams();
-    // console.log(id); 
     const [product,setProduct] = useState(undefined);
 
-    const {setCartTotal} = useContext(CartContext); 
+    const dispatch = useDispatch();
+    const cart = useSelector((state)=>state.cart.value);
+  
+    const [quantity,setQuantity] = useState(0);
+    
+    const addQuantity = ()=>{
+        dispatch(addToCart({...product,quantity}));
+        setQuantity(prev=>prev+1);
+        showToast("Product added to cart");
+    }
+
+    const removeQuantity = ()=>{
+        dispatch(removeFromCart(product.id));
+        setQuantity(prev=>prev-1);
+        showToast("Product removed from cart");
+    }
+
 
     const getProduct=async(id)=>{
+        const idx = cart.findIndex(ct=>ct.id==id);
+        if(idx >= 0){
+            setProduct(cart[idx]);
+            setQuantity(cart[idx].quantity)
+            return;
+        }
         try {
             const data = (await axios.get(`https://api.escuelajs.co/api/v1/products/${id}`)).data;
-            // console.log(data);
             setProduct(data);
         } catch (error) {
-            console.log(error.message); 
+            showToast(error.message); 
         }
     }
 
-    const updateCart = ()=>{
-        setCartTotal(prev=>{
-            let plist = [...prev];
-            const idx = plist.findIndex(p=>p.id==product.id);
-            if(idx>-1){
-              plist[idx].quantity += 1;
-              return plist;
-            }
-            product.quantity = 1;
-            return [...plist,product];
-          });
-    }
 
     useEffect(()=>{
         getProduct(id);
@@ -59,8 +66,16 @@ export const SingleProduct = () => {
                             <p className='desc' >{product.description}</p>
                         </div>
                         <div>
-                            <button className='btn outline-btn' onClick={updateCart} >Add To Cart</button>
-                        </div>
+                            {
+                            quantity==0 ?
+                            <button className='btn outline-btn' onClick={addQuantity} >Add To Cart</button> :
+                            <div className='add-sub'>
+                                <button className='btn outline-btn' onClick={removeQuantity}>-</button>
+                                <p>{quantity}</p>
+                                <button className='btn outline-btn' onClick={addQuantity}>+</button>
+                            </div>
+                            }
+                        </div>                            
                     </div>
                 </div>
             )

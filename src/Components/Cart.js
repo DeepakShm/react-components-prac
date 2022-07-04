@@ -1,29 +1,32 @@
-import React from 'react'
-import { useEffect } from 'react';
-import { useContext } from 'react'
-import CartContext from '../Context/CartContext'
 import Card from './Card';
+import { useSelector } from 'react-redux';
 
 export const Cart = () => {
 
-    const {cartTotal} = useContext(CartContext);
-    
-    useEffect(()=>{
-        console.log(cartTotal);
-    },[cartTotal])
+    const cart = useSelector((state)=>state.cart.value);
 
   return (
     <div className='my-cart'>
+      <div className='cart-head'>
         <h2>My Cart</h2>
-        <div className='cart-list'>
+          <h3>Total Items : {cart.length}</h3>
+        <div>
+          <button className='btn' >Checkout</button>
+        </div>
+      </div>
+        
             {
-                cartTotal.map(pl=>{
+              cart.length == 0? <h3>No Product added to cart</h3>  :
+        <div className='cart-list'>
+          {
+                cart.map(pl=>{
                   return (
                       <Card key={pl.id} type="cart"  product={pl}/>
-                  )
-                })
-            }
+                      )
+                    })
+                  }
         </div>
+            }
     </div>
   )
 }

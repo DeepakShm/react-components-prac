@@ -8,6 +8,13 @@ import { Home } from './Pages/Home';
 import { Shop } from './Pages/Shop';
 import { Product } from './Pages/Product';
 import { MyCart } from './Pages/MyCart';
+import { Toaster,toast } from 'react-hot-toast';
+
+export function showToast(msg){
+  toast(msg,{
+    duration:700
+  })
+}
 
 function App() {
 
@@ -27,6 +34,7 @@ function App() {
           <Footer />
         </BrowserRouter>
       </CartContext.Provider>
+      <Toaster/>
     </div>
   );
 }

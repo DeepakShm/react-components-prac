@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react'
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { showToast } from '../App';
 import Card from '../Components/Card';
 import { Loading } from '../Components/Loading';
 
@@ -17,7 +18,7 @@ const ProductList = ({limit,category}) => {
       const data = (await axios.get(`https://api.escuelajs.co/api/v1/products?offset=1&limit=${limit}`)).data;
       setData(data);
     } catch (error) {
-      console.log(error.message); 
+      showToast(error.message); 
     }
   };
 
@@ -26,7 +27,7 @@ const ProductList = ({limit,category}) => {
       const data = (await axios.get(`https://api.escuelajs.co/api/v1/categories/${category}/products?offset=1&limit=${limit}`)).data;
       setData(data);
     } catch (error) {
-      console.log(error.message); 
+      showToast(error.message); 
     } 
   }
 
@@ -42,7 +43,7 @@ const ProductList = ({limit,category}) => {
   return (
     <div className='below-cta'>
         {
-          data.length == 0 ? <Loading/> : (
+          data.length === 0 ? <Loading/> : (
           <div className='card-list'>
               {
                 data.map(pl=>{

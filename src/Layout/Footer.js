@@ -1,7 +1,6 @@
 import React from 'react'
 import InputGroup from '../Components/InputGroup'
 import SignUpButton from '../Components/SignUpButton'
-import ALink from '../Components/ALink';
 import Socials from '../Components/Socials';
 
 export const Footer = () => {

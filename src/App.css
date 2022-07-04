@@ -392,3 +392,26 @@
     grid-template-columns: repeat(4,1fr);
     gap: 20px;
 }
+.add-sub{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+.add-sub button {
+  width: auto !important;
+}
+.add-sub p{
+  width: 100%;
+  text-align: center;
+}
+.btn-red{
+  color: rgb(242, 32, 32);
+}
+.btn-red:hover{
+  background-color: rgb(242, 32, 32);
+}
+.cart-head{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
